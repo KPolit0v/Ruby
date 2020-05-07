@@ -48,4 +48,3 @@ def check_result result, last_digit, size
   end
 end
 puts check_result end_result, digits[0], max_size
-
