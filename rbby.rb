@@ -1,59 +1,51 @@
 
+puts 'enter a number:'
+account_number = gets.chomp
+digits = []
+max_size = account_number.length().to_i
+digits[max_size] = 1
+string_counter = 0
+array_counter = 0
 
-
-
-
-number = gets.chomp().to_i
-numberstr = number.to_s
-
-if numberstr.length().to_i > 19
- 	return puts "The number has too many digits"
-elsif numberstr.length().to_i < 13
-	return puts "The number dont has enough digits"
-end
-
-a = 0
-x = 0
-i = 0
-digits = Array.new
-while a < numberstr.length()
- 	digits[i] = numberstr[x]
-	x += 1
-	a += 1
-	i += 1
+digits.each do |n|
+  digits[array_counter] = account_number[string_counter]
+  string_counter += 1
+  array_counter += 1
 end
 digits = digits.reverse
-print digits
-a = 0
-i = 0
+digits.delete_at(0)
 
+string_counter = 0
+array_counter = 0
 sum3 = 0
-while a < numberstr.length() 
-		sum1 = 0
-		sum2 = 0
-		if a%2 == 1 
- 			sum1 = 2*digits[i].to_i
- 				if sum1 >= 10
- 					m = sum1.to_s[0]
- 					n = sum1.to_s[1] 
- 					sum2 = m.to_i + n.to_i
- 				else 
- 					sum2 = sum1.to_i
- 				end
- 		else a%2 == 0
- 			sum2 = digits[i]
-		end
-		sum3 += sum2.to_i
-		a += 1
-		i += 1
+digits.each do |n|
+  sum1 = 0
+  sum2 = 0
+  if string_counter%2 == 1 
+    sum1 = 2*digits[array_counter].to_i
+ 	if sum1 >= 10
+ 	  first_digit = sum1.to_s[0]
+ 	  secound_digit = sum1.to_s[1] 
+ 	  sum2 = first_digit.to_i + secound_digit.to_i
+ 	else 
+ 	  sum2 = sum1.to_i
+ 	end
+  else string_counter%2 == 0
+    sum2 = digits[array_counter]
+  end
+  sum3 += sum2.to_i
+  string_counter += 1
+  array_counter += 1
 end
 
 sum = sum3.to_i - digits[0].to_i 
-end_result = (sum*9)%10
+end_result = (sum *9)%10
 
-
-if end_result == digits[0].to_i
-	print "The number is valid"
-else
-	print "The number is invalid"
+def check_result result, last_digit, size
+  if size > 13 && size < 19
+    last_digit.to_i.equal? result  
+  else false
+  end
 end
+puts check_result end_result, digits[0], max_size
+
