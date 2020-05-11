@@ -12,7 +12,6 @@ class CardNumber
   def valid?
     digits_array
     calculations_cycle
-    calculations_result
     check_result
   end
 
@@ -25,7 +24,7 @@ class CardNumber
   def calculations_cycle
     @digits_array.each do
       calculations_paths
-      @sum3 += @sum2.to_i
+      @sum3 += @sum2
       @counter_calculations += 1
     end
   end
@@ -61,15 +60,13 @@ class CardNumber
     @sum2 = @digits_array[@counter_calculations]
   end
 
-  def calculations_result
-    sum = @sum3.to_i - @digits_array[0]
-    @result = (sum * 9) % 10
-  end
-
   def check_result
-    (12..19).cover?(@array_size) && @digits_array[0] == @result
+    sum = @sum3 - @digits_array[0] 
+    result = (sum * 9) % 10
+    (12..19).cover?(@array_size) && @digits_array[0] == result
   end
 end
+
 account_number = ARGV.first
 acc_number = CardNumber.new(account_number)
 puts acc_number.valid?
