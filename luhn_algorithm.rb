@@ -4,7 +4,6 @@ class CardNumber
     @entered_number = entered_number
     @array_size = @entered_number.length
     @counter_calculations = 0
-    @array_counter = 0
     @sum1 = 0
     @sum2 = 0
     @sum3 = 0
@@ -20,8 +19,7 @@ class CardNumber
   private
 
   def digits_array
-    @array_elements = @entered_number.split(//).reverse
-    @digits_array ||= @array_elements.map(&:to_i)
+    @digits_array ||= @entered_number.split(//).reverse.map(&:to_i)
   end
 
   def calculations_cycle
