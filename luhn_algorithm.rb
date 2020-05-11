@@ -1,6 +1,5 @@
 class CardNumber
   def initialize(entered_number)
-    @array_elements = []
     @entered_number = entered_number
     @array_size = @entered_number.length
     @counter_calculations = 0
