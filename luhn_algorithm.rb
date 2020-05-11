@@ -21,11 +21,7 @@ class CardNumber
 
   def digits_array
     @array_elements = @entered_number.split(//).reverse
-    @array_elements.each do
-      @array_elements[@array_counter] = @array_elements[@array_counter].to_i
-      @array_counter += 1
-    end
-    @digits_array ||= @array_elements
+    @digits_array ||= @array_elements.map(&:to_i)
   end
 
   def calculations_cycle
