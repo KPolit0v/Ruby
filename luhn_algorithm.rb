@@ -1,12 +1,10 @@
-account_number = ARGV.first
-
-class Card_number
+class CardNumber
   def initialize(entered_number)
     @array_elements = []
     @entered_number = entered_number
-    @counter_array = 0
     @array_size = @entered_number.length
     @counter_calculations = 0
+    @array_counter = 0
     @sum1 = 0
     @sum2 = 0
     @sum3 = 0
@@ -14,7 +12,7 @@ class Card_number
 
   def valid?
     digits_array
-    calculations
+    calculations_cycle
     calculations_result
     check_result
   end
@@ -22,58 +20,62 @@ class Card_number
   private
 
   def digits_array
-    @array_elements = @entered_number.split(//)
-    @array_elements = @array_elements.reverse
+    @array_elements = @entered_number.split(//).reverse
+    @array_elements.each do
+      @array_elements[@array_counter] = @array_elements[@array_counter].to_i
+      @array_counter += 1
+    end
+    @digits_array ||= @array_elements
   end
 
-  def calculations
-    @array_elements.each do
-      calculations_one
+  def calculations_cycle
+    @digits_array.each do
+      calculations_paths
       @sum3 += @sum2.to_i
       @counter_calculations += 1
     end
   end
 
-  def calculations_one
+  def calculations_paths
     if (@counter_calculations % 2).odd?
-      calculations_two
+      calculations_first_path
     elsif (@counter_calculations % 2).zero?
-      calculations_five
+      calculations_secound_path
     end
   end
 
-  def calculations_two
-    @sum1 = 2 * @array_elements[@counter_calculations].to_i
+  def calculations_first_path
+    @sum1 = 2 * @digits_array[@counter_calculations]
     if @sum1 >= 1
-      calculations_three
+      calculations_first_case
     else
-      calculations_four
+      calculations_secound_case
     end
   end
 
-  def calculations_three
+  def calculations_first_case
     first_digit = @sum1.to_s[0]
     secound_digit = @sum1.to_s[1]
     @sum2 = first_digit.to_i + secound_digit.to_i
   end
 
-  def calculations_four
+  def calculations_secound_case
     @sum2 = @sum1
   end
 
-  def calculations_five
-    @sum2 = @array_elements[@counter_calculations]
+  def calculations_secound_path
+    @sum2 = @digits_array[@counter_calculations]
   end
 
   def calculations_result
-    sum = @sum3.to_i - @array_elements[0].to_i
+    sum = @sum3.to_i - @digits_array[0]
     @result = (sum * 9) % 10
   end
 
   def check_result
-    (12..18).cover?(@array_size) && @array_elements[0].to_i == @result
+    (12..19).cover?(@array_size) && @digits_array[0] == @result
   end
 end
-
-acc_number = Card_number.new(account_number)
+account_number = ARGV.first
+acc_number = CardNumber.new(account_number)
 puts acc_number.valid?
